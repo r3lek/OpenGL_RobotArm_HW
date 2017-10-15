@@ -1,0 +1,6 @@
+# Ignore .vs file path
+.vs/**
+
+
+# MAC HIDDEN FILES
+.DS_Store
