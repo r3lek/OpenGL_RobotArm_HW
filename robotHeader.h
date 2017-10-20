@@ -30,6 +30,7 @@ GLdouble upperRot = 0;
 GLdouble lowerRot = 0;
 GLdouble wristRot = 0;
 GLdouble finger1_rot = 0;
+GLdouble finger1Translate = 0;
 GLdouble finger2_rot = 0;
 GLdouble finger3_rot = 0;
 GLdouble finger4_rot = 0;
@@ -46,6 +47,7 @@ GLdouble rotation_sun = 0.0;
 GLdouble rotation_earth = 0.0;
 GLdouble rotation_moon = 0.0;
 GLdouble rotation_mars = 0.0;
+GLdouble rotation_45 = 0;
 
 
 // global values for camera

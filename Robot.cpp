@@ -126,10 +126,13 @@ void drawShoulderJoint()
 //Actual upper arm thats connected btwn shoulder and upper arm joint
 void drawUpperArm()
 {
+
 	glColor3f(0.0f, 0.0f, 0.0f);
 	//1st part of upper arm
 	glPushMatrix();
 		glTranslated(-0.2, 1, 0.0);
+//		glRotated(rotation_angle, tx, 0, 0);
+		glTranslated(0.0,0.0,0);
 		glScalef(0.1, 1.45, 0.1);
 		//glRotated(rotation_sun, 0, 1, 0);
 		glutSolidCube(1.0);	// locate the sun at the origin
@@ -162,8 +165,8 @@ void drawLowerArm()
 {
 	glColor3f(0.1f, 0.1f, 0.1f);  //'bones' are green
 	glPushMatrix();
-		glTranslated(0.2, 1.5, 0);
-		glRotated(rotation_angle, tx, 0, 0.0);	//maybe switch tx for -tx, for 'down' movement
+		glTranslated(0.2, 1.5, 0); //where sphere is
+		glRotated(rotation_angle, -tx, 0, 0.0);	//maybe switch tx for -tx, for 'down' movement
 		glTranslated(0, 0.5, 0);
 		glScalef(0.1, 1.0, 0.1);
 		glTranslated(0.0, 0.0, 0.0);
@@ -174,16 +177,65 @@ void drawLowerArm()
 	//2nd part of upper arm	//FIXED
 	glPushMatrix(); 	
 		glTranslated(-0.2, 1.5, -0.0); //negative, adjust x coordinate
-		glRotated(rotation_angle, tx, 0, 0.0);	//Works, this order is needed
+		glRotated(rotation_angle, -tx, 0, 0.0);	//Works, this order is needed
 		glTranslated(0.0, 0.5, -0.0);			//^^ the 'first' (0,0,0) trans not needed
 		glScalef(0.1, 1.0, 0.1);
 		glTranslated(0.0, 0.0, 0.0);
 		
 		glutSolidCube(1.0);	// locate the sun at the origin
 	glPopMatrix();
+
+
+}
+
+//Draw wrist joint
+void drawWristdJoint()
+{
+	glColor3f(0.5f, 0.5f, 0.5f);    // sun is orange
+
+	//(FIXED)Wrist, Works, put inside own function, andd add its own translateVariable, wristTX = ++
+	glPushMatrix();
+		glTranslated(-0, 1.5, -0.0); //negative, adjust x coordinate
+		glRotated(rotation_angle, -tx, 0, 0.0);	//Works, this order is needed
+		glTranslated(0.0, 1, -0.0);			//^^ the 'first' (0,0,0) trans not needed
+											//glScalef(0.1, 1.0, 0.1);
+		glTranslated(0.0, 0.0, 0.0);
+
+		glutSolidSphere(0.35, 20, 16);	// locate the sun at the origin
+	glPopMatrix();
 }
 
 
+//draw hand 
+void drawHand(){
+
+	glColor3f(0.1f, 0.1f, 0.1f);  //'bones' are green
+	glPushMatrix();
+
+//	glTranslated(0.2, 2.75, 0);
+		glTranslated(0.0,2.5, 0);
+//		glRotated(finger1_rot, -finger1Translate, 0, 0);	//maybe switch tx for -tx, for 'down' movement
+		glTranslated(0, 0.5, 0);	//Translate to wrist joint location
+		glScalef(0.1, 0.5, 0.1);
+		glTranslated(0.0, 0.0, 0.0);
+		glutSolidCube(1);
+	glPopMatrix();
+
+	//2nd part of first finger
+	glColor3f(1.0f, 0.1f, 0.1f);
+	glPushMatrix();
+		glTranslated(0.0, 3.20, -0.0); //negative, adjust x coordinate
+		glRotated(finger1_rot, -finger1Translate, 0, 0.0);	//Works, this order is needed
+		glTranslated(0.0, 0.1, -0.0);			//^^ the 'first' (0,0,0) trans not needed
+		glScalef(0.1, 0.25, 0.1);
+		glTranslated(0.0, 0.0, 0.0);
+	
+		glutSolidCube(1.0);	// locate the sun at the origin
+	glPopMatrix();
+	
+
+
+}
 
 
 
@@ -191,11 +243,20 @@ void drawLowerArm()
 
 void drawSun()
 {	// Sun
-	glColor3f(1.0f, 0.5f, 0.0f);    // sun is orange
+	glColor3f(1.0f, 0.5f, 0.0f);    // sun is orange	//Wrist, Works, put inside own function, andd add its own translateVariable, wristTX = ++
+	glPushMatrix();
+		glTranslated(-0, 1.5, -0.0); //negative, adjust x coordinate
+		glRotated(rotation_angle, -tx, 0, 0.0);	//Works, this order is needed
+		glTranslated(0.0, 1, -0.0);			//^^ the 'first' (0,0,0) trans not needed
+												//glScalef(0.1, 1.0, 0.1);
+		glTranslated(0.0, 0.0, 0.0);
+
+		glutSolidSphere(0.35, 20, 16);	// locate the sun at the origin
+	glPopMatrix();
 
 	glPushMatrix();
-	glRotated(rotation_sun, 0, 1, 0);
-	glutSolidSphere(0.5, 20, 16);	// locate the sun at the origin
+		glRotated(rotation_sun, 0, 1, 0);
+		glutSolidSphere(0.5, 20, 16);	// locate the sun at the origin
 	glPopMatrix();
 
 }
@@ -248,21 +309,27 @@ void displaySolarSystem()
 
 	drawAxes();
 
-//	glPushMatrix();	//Not needed for now (1)
-//		glRotated(rotation_sun, 0, 1, 0); //rotate to see if obj in good place (2)
-
+	glPushMatrix();	//Not needed for now (1)
+		glRotatef(rotation_45, 1, 0, 0); //rotate to see if obj in good place (2)
+		glRotatef(shoulder_rotation, 0,1,0);
+		
 		drawShoulderJoint();
 		drawUpperArm();
+
 		drawArmJoint();
 		
 //		glPushMatrix();	//This can rotate around y fine
 //			glRotatef(rotation_sun, 0,1, 0);
-			drawLowerArm();
+		drawLowerArm();
 //		glPopMatrix();	//Goes together with push matrix to rotate around y (3)
 
 //	glPopMatrix();
+		drawWristdJoint();
+//		glPopMatrix();	//(3) - Rotates around its own y-axis. Goes together with first oush matrix
 
-
+		drawHand();
+	glPopMatrix();
+	glPopMatrix();
 	glutSwapBuffers();
 }
 
@@ -297,6 +364,17 @@ void myKeyboard(unsigned char key, int x, int y)
 		tx += 1;
 		rotation_angle += 0.5;
 		break;
+	case 'q' :
+		rotation_45 += 5;
+		break;
+	case 'm':
+		finger1_rot+=1;
+		finger1Translate++;
+		break;
+	case 'i':
+		shoulder_rotation+=5;
+		break;
+
 
 
 	default:
