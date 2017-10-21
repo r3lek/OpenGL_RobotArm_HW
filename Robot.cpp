@@ -207,36 +207,41 @@ void drawWristdJoint()
 
 
 //draw hand 
-void drawHand(){
+void drawHand() {
 
+	//1st finger bone, always remains straight
 	glColor3f(0.1f, 0.1f, 0.1f);  //'bones' are green
 	glPushMatrix();
-
-//	glTranslated(0.2, 2.75, 0);
-		glTranslated(0.0,2.5, 0);
-//		glRotated(finger1_rot, -finger1Translate, 0, 0);	//maybe switch tx for -tx, for 'down' movement
-		glTranslated(0, 0.5, 0);	//Translate to wrist joint location
+		glTranslated(0.0, 1.5, 0);
+		glRotated(rotation_angle, -tx, 0, 0.0);	//rotate around wrist joint
+		glTranslated(0, 1.5, 0);	//Translate to wrist joint location
 		glScalef(0.1, 0.5, 0.1);
 		glTranslated(0.0, 0.0, 0.0);
 		glutSolidCube(1);
 	glPopMatrix();
 
-	//2nd part of first finger
+	//2nd part of finger, this one 'curls', ie rotates
 	glColor3f(1.0f, 0.1f, 0.1f);
 	glPushMatrix();
-		glTranslated(0.0, 3.20, -0.0); //negative, adjust x coordinate
-		glRotated(finger1_rot, -finger1Translate, 0, 0.0);	//Works, this order is needed
-		glTranslated(0.0, 0.1, -0.0);			//^^ the 'first' (0,0,0) trans not needed
-		glScalef(0.1, 0.25, 0.1);
-		glTranslated(0.0, 0.0, 0.0);
-	
-		glutSolidCube(1.0);	// locate the sun at the origin
+		glTranslated(0.0, 1.5, -0.0);	//translate it to same position as 1st bone
+		glRotated(rotation_angle, -tx, 0, 0.0);	//This rotates along wrist joint
+
+		glTranslated(0.0, 1.75, -0.0); //translates appropriately. Can be 1.75 or 1.7 
+		glRotated(finger1_rot, -finger1Translate, 0, 0.0);//Translates around its own x-axi
+		glTranslated(0.0, 0.1, -0.0);//Needed as small num so it wont rotate by alot around own axis
+		glScalef(0.1, 0.25, 0.1);//Scale same as 1st bone
+		glTranslated(0.0, 0.0, 0.0);//Not needed since already at origin
+		glutSolidCube(1.0);	
 	glPopMatrix();
-	
+
+
+
+
+
+
 
 
 }
-
 
 
 
