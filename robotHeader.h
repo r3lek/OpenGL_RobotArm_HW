@@ -1,3 +1,10 @@
+/*
+* Hw1Header.h
+*
+*  Created on: Aug 15, 2017
+*      Author: Miguel Cayetano
+*      CIN: 303435436
+*/
 #pragma once
 #ifndef LAB_SOLAR_H
 #define LAB_SOLAR_H
@@ -22,13 +29,22 @@ const float worldHeight = 500.0;
 float t;
 float tt = 0;
 bool pressedR = false;
+bool isOn = true;
+bool isSolid = true;
+bool isAxes = true;
+GLdouble ballRadius = 0;
 
 //Initial values for shoulder translation/rotation		|| no scaling
 GLdouble shoulder_rotation = 0;
 
 GLdouble upperRot = 0;
+
+//Lower arm rotate and translate
 GLdouble lowerRot = 0;
+GLdouble lowerArmTran = 0;
+
 GLdouble wristRot = 0;
+GLdouble wristTrans = 0;
 GLdouble finger1_rot = 0;
 GLdouble finger1Translate = 0;
 GLdouble finger2_rot = 0;
@@ -36,6 +52,8 @@ GLdouble finger3_rot = 0;
 GLdouble finger4_rot = 0;
 GLdouble finger5_rot = 0;
 
+GLdouble xTran = 0;
+GLdouble zTran = 0;
 
 
 
